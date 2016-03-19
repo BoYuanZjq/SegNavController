@@ -1,7 +1,4 @@
 
-导航条上的选项卡，扩展性好
-
-
 #SegNavController<br>
 ##编译环境<br>
 Xcode 6＋<br>
@@ -34,4 +31,4 @@ Xcode 6＋<br>
     };
 
 ##开源协议<br>
-Teameeting iOS app is under the Apache license. See the LICENSE file for more details.
+SegNavController under the Apache license. See the LICENSE file for more details.
