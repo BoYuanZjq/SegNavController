@@ -3,8 +3,9 @@
 ##编译环境<br>
 Xcode 6＋<br>
 ##运行效果<br>
-![image](https://github.com/BoYuanZjq/SegNavController/tree/master/screenshots/hot.png)<br>
-![image](https://github.com/BoYuanZjq/SegNavController/tree/master/screenshots/new.png)<br>
+<img src="https://github.com/BoYuanZjq/SegNavController/tree/master/screenshots/hot.png" alt="SegNavController screenshots" width="752" height="1380" />
+
+<img src="https://github.com/BoYuanZjq/SegNavController/tree/master/screenshots/new.png" alt="SegNavController screenshots" width="752" height="1380" />
 ##使用方法<br>
 
 
