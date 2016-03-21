@@ -33,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setupViews];
     
@@ -42,6 +43,13 @@
 }
 - (void)setupViews {
     [self.view addSubview:self.centerContainerView];
+    
+     NSDictionary* views = NSDictionaryOfVariableBindings(_centerContainerView,_paggingScrollView);
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_centerContainerView]-0-|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_centerContainerView]-0-|" options:0 metrics:nil views:views]];
+    
+    [_centerContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_paggingScrollView]-0-|" options:0 metrics:nil views:views]];
+    [_centerContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_paggingScrollView]-0-|" options:0 metrics:nil views:views]];
 }
 
 - (void)reloadData {
@@ -50,19 +58,67 @@
     }
     
     [self.paggingScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
+    __block  NSArray* tempvConstraintArray = nil;
+    static UIView *tempView = nil;
     [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *viewController, NSUInteger idx, BOOL *stop) {
         [self addChildViewController:viewController];
         [self.paggingScrollView addSubview:viewController.view];
-        CGRect contentViewFrame = viewController.view.bounds;
-        contentViewFrame.origin.y = 0;
-        contentViewFrame.origin.x = idx * CGRectGetWidth(self.view.bounds);
-        contentViewFrame.size.width = CGRectGetWidth(self.view.bounds);
-        contentViewFrame.size.height = CGRectGetHeight(self.view.bounds);
-        viewController.view.frame = contentViewFrame;
+        UIView *view = viewController.view;
+        view.translatesAutoresizingMaskIntoConstraints = NO;
+        NSDictionary* views;
+        if (tempView) {
+            views = NSDictionaryOfVariableBindings(view,tempView);
+        }else{
+            views = NSDictionaryOfVariableBindings(view);
+        }
+        
+        if (idx!=0) {
+            if (tempvConstraintArray) {
+                [NSLayoutConstraint deactivateConstraints:tempvConstraintArray];
+            }
+            NSArray* vConstraintArray = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[view]-0-|" options:0 metrics:nil views:views];
+            [NSLayoutConstraint activateConstraints:vConstraintArray];
+            
+            
+            NSArray* v2ConstraintArray = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[view]-0-|" options:0 metrics:nil views:views];
+            [NSLayoutConstraint activateConstraints:v2ConstraintArray];
+            
+            
+            NSArray* v4ConstraintArray = [NSLayoutConstraint constraintsWithVisualFormat:@"[tempView]-0-[view]" options:0 metrics:nil views:views];
+            [NSLayoutConstraint activateConstraints:v4ConstraintArray];
+            
+            NSLayoutConstraint* imageViewWidthConstraint = [NSLayoutConstraint constraintWithItem:viewController.view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_paggingScrollView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.f];
+            
+            NSLayoutConstraint* imageViewHeightConstraint = [NSLayoutConstraint constraintWithItem:viewController.view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_paggingScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.f];
+            imageViewWidthConstraint.active = YES;
+            imageViewHeightConstraint.active = YES;
+            tempView = viewController.view;
+            tempvConstraintArray = v2ConstraintArray;
+            
+        }else{
+            tempView = viewController.view;
+            
+            NSArray* vConstraintArray = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[view]-0-|" options:0 metrics:nil views:views];
+            [NSLayoutConstraint activateConstraints:vConstraintArray];
+            
+            NSArray* v2ConstraintArray = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[view]" options:0 metrics:nil views:views];
+            [NSLayoutConstraint activateConstraints:v2ConstraintArray];
+            
+            NSLayoutConstraint* imageViewWidthConstraint = [NSLayoutConstraint constraintWithItem:viewController.view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_paggingScrollView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.f];
+            NSLayoutConstraint* imageViewHeightConstraint = [NSLayoutConstraint constraintWithItem:viewController.view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_paggingScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.f];
+            imageViewWidthConstraint.active = YES;
+            imageViewHeightConstraint.active = YES;
+        }
+        
+//        CGRect contentViewFrame = viewController.view.bounds;
+//        contentViewFrame.origin.y = 0;
+//        contentViewFrame.origin.x = idx * CGRectGetWidth(self.view.bounds);
+//        contentViewFrame.size.width = CGRectGetWidth(self.view.bounds);
+//        contentViewFrame.size.height = CGRectGetHeight(self.view.bounds);
+//        viewController.view.frame = contentViewFrame;
     }];
     
-    [self.paggingScrollView setContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds) * self.viewControllers.count, 0)];
+    //[self.paggingScrollView setContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds) * self.viewControllers.count, 0)];
     
     [self setupScrollToTop];
 }
@@ -152,23 +208,27 @@
 
 - (UIView *)centerContainerView {
     if (!_centerContainerView) {
-        _centerContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
+        _centerContainerView = [[UIView alloc] initWithFrame:CGRectZero];
         _centerContainerView.backgroundColor = self.view.backgroundColor;
         
         [_centerContainerView addSubview:self.paggingScrollView];
+        _centerContainerView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return _centerContainerView;
 }
 
 - (UIScrollView *)paggingScrollView {
     if (!_paggingScrollView) {
-        _paggingScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        _paggingScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
         _paggingScrollView.bounces = NO;
+        _paggingScrollView.backgroundColor = [UIColor whiteColor];
         _paggingScrollView.pagingEnabled = YES;
         [_paggingScrollView setScrollsToTop:NO];
         _paggingScrollView.delegate = self;
         _paggingScrollView.showsVerticalScrollIndicator = NO;
         _paggingScrollView.showsHorizontalScrollIndicator = NO;
+        _paggingScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+        
     }
     return _paggingScrollView;
 }
