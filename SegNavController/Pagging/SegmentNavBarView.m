@@ -128,7 +128,6 @@ static CGFloat kTitleMargin = 50;
 
 - (void)didTapTextLabel:(UITapGestureRecognizer*)gesture
 {
-    
     if (self.didChangedBarCompleted) {
         self.didChangedBarCompleted(gesture.view.tag);
     }

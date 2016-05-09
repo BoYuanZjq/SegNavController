@@ -17,6 +17,7 @@
 		7807C1281C9C5FFF00237120 /* SegNavControllerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7807C1271C9C5FFF00237120 /* SegNavControllerUITests.m */; };
 		7807C13A1C9C604A00237120 /* PaggingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7807C1371C9C604A00237120 /* PaggingViewController.m */; };
 		7807C13B1C9C604A00237120 /* SegmentNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7807C1391C9C604A00237120 /* SegmentNavBarView.m */; };
+		789CB0421CC8FEB0002BFC25 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB0411CC8FEB0002BFC25 /* HMSegmentedControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		7807C1371C9C604A00237120 /* PaggingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaggingViewController.m; sourceTree = "<group>"; };
 		7807C1381C9C604A00237120 /* SegmentNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentNavBarView.h; sourceTree = "<group>"; };
 		7807C1391C9C604A00237120 /* SegmentNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentNavBarView.m; sourceTree = "<group>"; };
+		789CB0401CC8FEB0002BFC25 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
+		789CB0411CC8FEB0002BFC25 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,7 @@
 		7807C0F61C9C5FFF00237120 = {
 			isa = PBXGroup;
 			children = (
+				789CB03F1CC8FEB0002BFC25 /* HMSegmentedControl */,
 				7807C1011C9C5FFF00237120 /* SegNavController */,
 				7807C11B1C9C5FFF00237120 /* SegNavControllerTests */,
 				7807C1261C9C5FFF00237120 /* SegNavControllerUITests */,
@@ -156,6 +160,16 @@
 				7807C1391C9C604A00237120 /* SegmentNavBarView.m */,
 			);
 			path = Pagging;
+			sourceTree = "<group>";
+		};
+		789CB03F1CC8FEB0002BFC25 /* HMSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				789CB0401CC8FEB0002BFC25 /* HMSegmentedControl.h */,
+				789CB0411CC8FEB0002BFC25 /* HMSegmentedControl.m */,
+			);
+			name = HMSegmentedControl;
+			path = SegNavController/HMSegmentedControl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +305,7 @@
 				7807C13B1C9C604A00237120 /* SegmentNavBarView.m in Sources */,
 				7807C10A1C9C5FFF00237120 /* ViewController.m in Sources */,
 				7807C1071C9C5FFF00237120 /* AppDelegate.m in Sources */,
+				789CB0421CC8FEB0002BFC25 /* HMSegmentedControl.m in Sources */,
 				7807C13A1C9C604A00237120 /* PaggingViewController.m in Sources */,
 				7807C1041C9C5FFF00237120 /* main.m in Sources */,
 			);
@@ -518,6 +533,7 @@
 				7807C12E1C9C5FFF00237120 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7807C12F1C9C5FFF00237120 /* Build configuration list for PBXNativeTarget "SegNavControllerTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +542,7 @@
 				7807C1311C9C5FFF00237120 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7807C1321C9C5FFF00237120 /* Build configuration list for PBXNativeTarget "SegNavControllerUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +551,7 @@
 				7807C1341C9C5FFF00237120 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
